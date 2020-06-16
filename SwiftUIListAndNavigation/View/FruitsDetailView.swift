@@ -11,26 +11,56 @@ import SwiftUI
 struct FruitsDetailView: View {
     let fruit: Fruit
     var body: some View {
-        //vertically arrange and leading alignment of the elements
+        
+        //HStack to apply the padding to all elements inside
+        HStack(alignment: .top) {
+            
+            //vertically arrange and leading alignment of the elements
             VStack(alignment: .leading) {
+                
+                //Display text in BOLD format
+                Text("Visual of \(fruit.name) along with Benefits")
+                    .font(.title)
+                    .bold()
+                
                 //Resize the image and do aspect ratio then display Image on image view
                 Image(fruit.imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                //vertically arrange and leading alignment of the elements
-                VStack(alignment: .leading) {
-                    //display text in title size
-                    Text("Benefits: ")
-                        .font(.title)
-                        .foregroundColor(.primary)
-                    //display all the benefits
-                    Text(fruit.benefits)
-                        .foregroundColor(.secondary)
-                }
+                
+                //Created the Subview for Benefits UI to keep code clean
+                BenefitsView(fruit: fruit)
+
+                //to move the views in top
+                Spacer()
             }
+            
+        }.padding()
             .navigationBarTitle(Text(fruit.name), displayMode: .inline)
-        }
+    }
 }
+
+
+//
+//  This will be called to create the Benefit UI
+//
+struct BenefitsView: View {
+    let fruit: Fruit
+    var body: some View {
+        
+        //vertically arrange and leading alignment of the elements
+        VStack(alignment: .leading) {
+            //display text in title size
+            Text("Benefits: ")
+                .font(.title)
+                .foregroundColor(.primary)
+            //display all the benefits
+            Text(fruit.benefits)
+                .foregroundColor(.secondary)
+        }
+    }
+}
+
 
 struct FruitsDetailView_Previews: PreviewProvider {
     static var previews: some View {
